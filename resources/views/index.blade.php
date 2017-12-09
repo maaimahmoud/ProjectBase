@@ -70,12 +70,6 @@ $(document).ready(function(){
         $("li").mouseenter(function(){
         $(this).css('text-decoration','underline');
         $(this).css('cursor','pointer');
-        ///$("#walk-through-section").animate({left: '250px'});
-        //$(".walk-through").hide('slide', {direction: 'left'}, 1000);
-        /*$(".mai").animate({
-            right: '750px',
-            opacity: '0.5',
-        });*/
             $(".mai").animate({"left": "-=500px"},"slow");
     });
         $("li").mouseleave(function(){
