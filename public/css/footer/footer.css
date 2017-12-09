@@ -1,0 +1,38 @@
+/* start footer */
+
+footer {
+    background-color: #222;
+    padding: 10px 0;
+    color: #fff;
+    font-size: 20px;
+}
+
+footer .copy-rights {
+    margin-bottom: 10px;
+}
+
+footer .social a {
+    color: #fff;
+    display: inline-block;
+    background: #ccc;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 10px;
+}
+
+footer .social a:first-child {
+    background-color: #3B5998;
+}
+
+footer .social a:nth-child(2) {
+    background-color: #1DA1F2;
+}
+
+footer .social a:nth-child(3) {
+    background-color: #B7177B;
+}
+
+
+/* end footer */
