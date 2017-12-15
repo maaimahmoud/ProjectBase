@@ -1,0 +1,43 @@
+.explore-area{
+    height: 610px;
+}
+.fixed-bg {
+    background-image:url("../images/Slogan.png");
+    background-attachment: fixed;
+    background-position:absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.walk-through{
+    height:610px;
+    background-color:#816447;
+    background-color: rgba(81,64,47,0.9);
+}
+.walk-through ul{
+    color: white;
+    font-family:Josefin-sans;
+    font-size: 45px;
+    padding-top: 100px;
+    /*padding-left: 100px;*/
+    list-style: none;
+}
+
+.explore-button{
+    margin-top: 465px;
+    margin-left: 47%;
+}
+.explore-area p{
+    color: white;  
+    margin-left :43%;
+}
+
+.mai{
+    position:absolute;
+}
+
+.btn:hover{
+    background-image:none;
+    background-color:#fcfd7b;
+    cursor: pointer;
+}
