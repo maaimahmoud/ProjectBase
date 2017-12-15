@@ -10,39 +10,45 @@
 ?>
 
 @section('content')
-    <div class="container">	
-		<div class="main">
-			<div id="mi-slider" class="mi-slider">
-				<ul>
-					<li><a href="#"><img src="images/1.jpg" alt="img01"><h4>Boots</h4></a></li>
-					<li><a href="#"><img src="images/2.jpg" alt="img02"><h4>Oxfords</h4></a></li>
-					<li><a href="#"><img src="images/3.jpg" alt="img03"><h4>Loafers</h4></a></li>
-					<li><a href="#"><img src="images/4.jpg" alt="img04"><h4>Sneakers</h4></a></li>
-				</ul>
-				<ul>
-					<li><a href="#"><img src="images/5.jpg" alt="img05"><h4>Belts</h4></a></li>
-					<li><a href="#"><img src="images/6.jpg" alt="img06"><h4>Hats &amp; Caps</h4></a></li>
-					<li><a href="#"><img src="images/7.jpg" alt="img07"><h4>Sunglasses</h4></a></li>
-					<li><a href="#"><img src="images/8.jpg" alt="img08"><h4>Scarves</h4></a></li>
-				</ul>
-				<ul>
-					<li><a href="#"><img src="images/9.jpg" alt="img09"><h4>Casual</h4></a></li>
-					<li><a href="#"><img src="images/10.jpg" alt="img10"><h4>Luxury</h4></a></li>
-					<li><a href="#"><img src="images/11.jpg" alt="img11"><h4>Sport</h4></a></li>
-				</ul>
-				<ul>
-					<li><a href="#"><img src="images/12.jpg" alt="img12"><h4>Carry-Ons</h4></a></li>
-					<li><a href="#"><img src="images/13.jpg" alt="img13"><h4>Duffel Bags</h4></a></li>
-					<li><a href="#"><img src="images/14.jpg" alt="img14"><h4>Laptop Bags</h4></a></li>
-					<li><a href="#"><img src="images/15.jpg" alt="img15"><h4>Briefcases</h4></a></li>
-				</ul>
-				<nav>
-					<a href="#">Shoes</a>
-					<a href="#">Accessories</a>
-					<a href="#">Watches</a>
-					<a href="#">Bags</a>
-				</nav>
+
+<div class="fixed-bg">
+
+    <div class="explore-area">  
+    	<button id="explore" type="button" class="explore-button btn btn-default btn-lg" data-scroll="walk-through">EXPLORE</button>
+        <p>If you have an account You can<br> <a href="#">Sign in</a> or <a href="#">Create a new account</a></p>
+    </div>
+
+    <div class="walk-through" id="walk-through-section">
+
+	    <div class="container">	
+			<div class="main">
+				<div id="mi-slider" class="mi-slider">
+					<ul class="Year-List">
+						<li><a href="#"><h4>First Year</h4></a></li>
+						<li><a href="#"><h4>Second Year</h4></a></li>
+						<li><a href="#"><h4>Third Year</h4></a></li>
+						<li><a href="#"><h4>Fourth Year</h4></a></li>
+					</ul>
+					<ul class="Course-List">
+						<li><a href="#"><h4>OOP</h4></a></li>
+						<li><a href="#"><h4>Graphics</h4></a></li>
+						<li><a href="#"><h4>Datastructure</h4></a></li>
+						<li><a href="#"><h4>Antenna</h4></a></li>
+						<li><a href="#"><h4>Database</h4></a></li>
+						<li><a href="#"><h4>Power</h4></a></li>
+					</ul>
+					<ul class="TermList">
+						<li><a href="#"><h4>First Term</h4></a></li>
+						<li><a href="#"><h4>Second Term</h4></a></li>
+					</ul>
+					<nav>
+						<a href="#" id="Year-Button">Year</a>
+						<a href="#" id="Course-Button">Course</a>
+						<a href="#" id="Term-Button">Term</a>
+					</nav>
+				</div>
 			</div>
 		</div>
 	</div>
+</div>
 @endsection
