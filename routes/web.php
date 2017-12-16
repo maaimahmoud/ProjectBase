@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/','getCourses@getCourses');
 
 
 Route::get('/search', function () {

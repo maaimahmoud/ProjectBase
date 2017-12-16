@@ -84,7 +84,7 @@
 .mi-slider ul li {
 	display: inline-block;
 	padding: 20px;
-	width: 21%;
+	width: 24%;
 	max-width: 300px;
 	-webkit-transform: translateX(600%);
 	transform: translateX(600%);
@@ -115,11 +115,11 @@
 
 .mi-slider ul li h4 {
 	display: inline-block;
-	font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+	font-family: "Times New Roman", serif;
 	font-style: italic;
 	font-style: bold;
 	font-weight: 400;
-	font-size: 30px;
+	font-size: 37px;
 	padding: 20px 10px 0;
 }
 
@@ -150,6 +150,8 @@
 	outline: none;
 	-webkit-transition: color 0.2s linear;
 	transition: color 0.2s linear;
+
+	font-size:20px;
 
 	pointer-events: none;
     cursor: default;
@@ -391,5 +393,5 @@
 }
 .walk-through-item:hover{
 	cursor: pointer;
-	color: #85e0e1; /*this is the hover color change color to whatever you want*/
+	color: #f49c98; /*this is the hover color change color to whatever you want*/
 }

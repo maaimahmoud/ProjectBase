@@ -29,12 +29,11 @@
 						<li><h4 class="walk-through-item">Fourth Year</h4></li>
 					</ul>
 					<ul class="Course-List">
-						<li><h4 class="walk-through-item">OOP</h4></li>
-						<li><h4 class="walk-through-item">Graphics</h4></li>
-						<li><h4 class="walk-through-item">Datastructure</h4></li>
-						<li><h4 class="walk-through-item">Antenna</h4></li>
-						<li><h4 class="walk-through-item">Database</h4></li>
-						<li><h4 class="walk-through-item">Power</h4></li>
+						@if(isset($courses))
+							@foreach($courses as $course)
+								<li><h4><?php echo $course[0]; ?></h4></li>
+							@endforeach
+						@endif
 					</ul>
 					<ul class="TermList">
 						<li><h4 class="walk-through-item">First Term</h4></li>
@@ -50,4 +49,6 @@
 		</div>
 	</div>
 </div>
+
+
 @endsection
