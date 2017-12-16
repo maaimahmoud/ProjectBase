@@ -385,3 +385,11 @@
 		display: none;
 	}
 }
+
+.walk-through-item{
+	transition:all 0.5s ease;
+}
+.walk-through-item:hover{
+	cursor: pointer;
+	color: #85e0e1; /*this is the hover color change color to whatever you want*/
+}

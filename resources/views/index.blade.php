@@ -19,27 +19,26 @@
     </div>
 
     <div class="walk-through" id="walk-through-section">
-
 	    <div class="container">	
 			<div class="main">
 				<div id="mi-slider" class="mi-slider">
 					<ul class="Year-List">
-						<li><a href="#"><h4>First Year</h4></a></li>
-						<li><a href="#"><h4>Second Year</h4></a></li>
-						<li><a href="#"><h4>Third Year</h4></a></li>
-						<li><a href="#"><h4>Fourth Year</h4></a></li>
+						<li><h4 class="walk-through-item">First Year</h4></li>
+						<li><h4 class="walk-through-item">Second Year</h4></li>
+						<li><h4 class="walk-through-item">Third Year</h4></li>
+						<li><h4 class="walk-through-item">Fourth Year</h4></li>
 					</ul>
 					<ul class="Course-List">
-						<li><a href="#"><h4>OOP</h4></a></li>
-						<li><a href="#"><h4>Graphics</h4></a></li>
-						<li><a href="#"><h4>Datastructure</h4></a></li>
-						<li><a href="#"><h4>Antenna</h4></a></li>
-						<li><a href="#"><h4>Database</h4></a></li>
-						<li><a href="#"><h4>Power</h4></a></li>
+						<li><h4 class="walk-through-item">OOP</h4></li>
+						<li><h4 class="walk-through-item">Graphics</h4></li>
+						<li><h4 class="walk-through-item">Datastructure</h4></li>
+						<li><h4 class="walk-through-item">Antenna</h4></li>
+						<li><h4 class="walk-through-item">Database</h4></li>
+						<li><h4 class="walk-through-item">Power</h4></li>
 					</ul>
 					<ul class="TermList">
-						<li><a href="#"><h4>First Term</h4></a></li>
-						<li><a href="#"><h4>Second Term</h4></a></li>
+						<li><h4 class="walk-through-item">First Term</h4></li>
+						<li><h4 class="walk-through-item">Second Term</h4></li>
 					</ul>
 					<nav>
 						<a href="#" id="Year-Button">Year</a>
