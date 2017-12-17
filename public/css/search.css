@@ -1,0 +1,63 @@
+.search-result{
+    margin-top: 10%;
+    text-align: center;
+    background-color: #e6e6e6;
+    border-radius: 10px;
+}
+
+#search_form{
+    width: 100%;
+    margin-top: 20px;
+}
+
+#search_value{
+    width: 42%;
+    margin-left: 4%;
+}
+
+#search_combo{
+    width: 25%;
+    margin: 0px 2%;
+}
+
+#search_search_btn{
+    width: 20%;
+}
+
+.card{
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 1px 1px 30px #999;
+    margin: 20px auto;
+    height: 250px;
+    background-color: #f49c98;
+}
+
+.card:hover{
+    cursor: pointer;
+}
+
+.project-logo{
+    border: 1px solid #999;
+    margin: 5px auto;
+    border-radius: 50%;
+}
+
+.card h4{
+    margin-top: -5px;
+    color:white;
+    font-family: 'Aclonica', sans-serif;
+}
+
+.project-description{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: 106px;
+    background-color: white;
+    margin: 0px -15px;
+    text-align: left;
+}
+
+.project-description p{
+    margin-left: 15px;
+}

@@ -28,8 +28,19 @@
         <div class="container">
 
             <div class="collapse navbar-collapse">
-                <form action="" method="GET" class="form-inline mr-auto">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <form action="/search" method="POST" class="form-inline mr-auto">
+                {{ csrf_field() }}
+                    <input class="form-control mr-sm-2" name="search_value" type="search" placeholder="Search" aria-label="Search">
+                    <select style="width: 70px; margin-right: 10px;" class="custom-select form-control" id="search_combo" name="search_combo">
+                        <option value="">Select your search method</option>
+                        <option value="proname">Project Name</option>
+                        <option value="tname">Team Name</option>
+                        <option value="year">Year</option>
+                        <option value="cname">Course Name</option>
+                        <option value="ccode">Course Code</option>
+                        <option value="dname">Department Name</option>
+                        <option value="dcode">Department Code</option>
+                    </select>
                     <button class="btn search_btn my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>

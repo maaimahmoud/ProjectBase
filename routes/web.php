@@ -15,7 +15,12 @@ Route::get('/', function () {
     return view('index');
 });
 
-
-Route::get('/search', function () {
-    return view('search.search');
+Route::post('/searchpage', function () {
+    return view('search');
 });
+
+Route::get('/searchpage', function () {
+    return view('search');
+});
+
+Route::post('/search', 'searchController@search');
