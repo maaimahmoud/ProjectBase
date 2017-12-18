@@ -17,3 +17,6 @@ Route::get('/','getCourses@getCourses');
 Route::get('/search', function () {
     return view('search.search');
 });
+
+Route::get('/user/{username}','UserController@showProfile');
+
