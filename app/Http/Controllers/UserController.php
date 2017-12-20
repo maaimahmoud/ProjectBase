@@ -49,7 +49,7 @@ class UserController extends Controller
 
         $userInfo = UserController::getUserInfo($username);
         $projectsList = UserController::getUserProjects($username);
-        return view('user.profile')->with('userInfo',$userInfo)->with('projectsList',$projectsList);
+        return view('user.profile',compact('userInfo','projectsList','username'));
     }
 
 

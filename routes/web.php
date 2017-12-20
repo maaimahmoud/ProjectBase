@@ -20,3 +20,5 @@ Route::get('/search', function () {
 
 Route::get('/user/{username}','UserController@showProfile');
 
+Route::get('/team/{teamID}','TeamController@showProfile');
+

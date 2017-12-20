@@ -1,7 +1,7 @@
 @extends('include.navbar')
 
 @section('title')
-    ProjectBase
+    <?php echo (count($userInfo)>0?$username:'User Not Found') ?>
 @endsection
 
 @section('content')
