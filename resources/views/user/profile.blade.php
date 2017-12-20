@@ -8,15 +8,19 @@
 
     @if(count($userInfo)>0)
         @foreach($userInfo as $info)
-        First Name: {{$info->FirstName}} <br>
-        Middle Name: {{$info->MiddleName}} <br>
-        Last Name: {{$info->LastName}} <br>
-        Expected Graduation Year: {{$info->ExpectedGradYear}} <br>
+        <h1>{{$info->username}}'s Profile<br></h1>
+        <h2>First Name: {{$info->FirstName}} </h2>
+        <h2>Middle Name: {{$info->MiddleName}} </h2>
+        <h2>Last Name: {{$info->LastName}} </h2>
+        <h2>Expected Graduation Year: {{$info->ExpectedGradYear}} </h2>
+        <br>
         @endforeach
 
+        <h2>List of Projects</h2>
         @foreach ($projectsList as $project)
-        <?php print_r($project) ?>
-        <br>
+
+        <h2><a href="/{{$project->tid}}/{{$project->name}}">{{$project->name}}</a></h2>
+
         @endforeach
     @else
         <p> User not found </p>

@@ -28,9 +28,9 @@ class TeamController extends Controller
     */
     public function getTeamProjects($teamID){
         $projectsList = DB::select(
-        "SELECT *
+        "SELECT name,tid
          FROM PROJECT
-         WHERE TID = $teamID");
+         WHERE tid = $teamID");
         
         return $projectsList;
     }
@@ -47,7 +47,10 @@ class TeamController extends Controller
          FROM team
          WHERE ID = $teamID");
         
-        return $teamName;
+        if(count($teamName)>0)
+        return array_values($teamName)[0]->Name;
+        else
+        return "NULL";
     }
 
 

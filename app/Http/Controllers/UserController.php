@@ -28,7 +28,7 @@ class UserController extends Controller
     */
     public function getUserProjects($username){
         $projectsList = DB::select(
-        "SELECT *
+        "SELECT name,tid
          FROM PROJECT
          WHERE TID IN
             (SELECT TID 

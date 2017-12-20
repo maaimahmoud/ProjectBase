@@ -1,20 +1,25 @@
 @extends('include.navbar')
 
 @section('title')
-    <?php echo (count($teamMembers)>0?array_values($teamName)[0]->Name:'Team Not Found') ?>
+    <?php echo ($teamName !== "NULL")?$teamName:'Team Not Found' ?>
 @endsection
 
 @section('content')
 
     @if(count($teamMembers)>0)
-    <ol>
-        @foreach($teamMembers as $member)
-          <li><a href="/user/{{$member->Susername}}">{{$member->Susername}}</a></li>
-        @endforeach
-    <ol>
-        @foreach ($projectsList as $project)
-        <?php print_r($project) ?>
+        <h1>{{$teamName}}'s Profile</h1>
         <br>
+        <h2>Team Members:</h2>
+        <ol>
+        @foreach($teamMembers as $member)
+        <li><h2><a href="/user/{{$member->Susername}}">{{$member->Susername}}</a></h2></li>
+        @endforeach
+        </ol>
+
+        <h2>List of Projects</h2>
+        @foreach ($projectsList as $project)
+        <h2><a href="/{{$project->tid}}/{{$project->tid}}">{{$project->name}}</a></h2>
+
         @endforeach
     @else
         <p> Team not found </p>
