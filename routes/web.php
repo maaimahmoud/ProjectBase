@@ -22,3 +22,4 @@ Route::get('/user/{username}','UserController@showProfile');
 
 Route::get('/team/{teamID}','TeamController@showProfile');
 
+Route::get('/statistics','StatisticsController@showStatistics');
