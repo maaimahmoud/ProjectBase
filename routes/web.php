@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/','getCourses@getCourses');
+Route::POST('/signUp', 'Accounts@signUp');
 
+Route::get('/','Accounts@getCourses');
 
-Route::get('/search', function () {
-    return view('search.search');
+Route::POST('/signIn','Accounts@signIn');
+
+Route::get('/signOut','Accounts@signOut');
+
+Route::get('/managedCourses',function(){
+	return view('Admin/managedCourses');
 });

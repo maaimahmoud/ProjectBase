@@ -2,6 +2,11 @@ $(function() {
     var yearNumber = 0;
     var termNumber=0;
 
+        $("#explore-sign-up").click(function(e){
+            $("#sign_up_button").click();   
+            console.log('MaiOmar');
+        });
+
 		$(".Year-List li").click(function(e){
         	$("#Year-Button").css('pointer-events','auto');
             yearNumber=$(this).index()+1;

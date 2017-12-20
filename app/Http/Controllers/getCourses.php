@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 class getCourses extends Controller
 {
 
-        function getCourses(){
+        function getCourses($username='0',$firstName='0'){
 
         $con = DB::connection()->getPdo();
 		$stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP1%' And Term=1");
 		$stmt->execute();
 		$row = $stmt->fetchAll();
 		$count = $stmt->rowCount();
-
 
 		$coursesYear1Term1 = array();
 
@@ -108,6 +107,7 @@ $stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP2%' And Term=
 		    $coursesYear4Term2 = $row;
 		}
 
-		return view('index', compact('coursesYear1Term1','coursesYear1Term2','coursesYear2Term1','coursesYear2Term2','coursesYear3Term1','coursesYear3Term2','coursesYear4Term1','coursesYear4Term2'));
+		return view('index', compact('coursesYear1Term1','coursesYear1Term2','coursesYear2Term1','coursesYear2Term2','coursesYear3Term1','coursesYear3Term2','coursesYear4Term1','coursesYear4Term2','username','firstName'));
 	}
+
 }
