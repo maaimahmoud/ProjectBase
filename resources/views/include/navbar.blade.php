@@ -7,13 +7,18 @@
 
     
     <!-- css files -->
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
-    <link rel="stylesheet" href="css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/navbar.css" />
-    @if(isset($cssfile) && $cssfile !== "")
-        <link rel="stylesheet" href={{$cssfile}} />
+    <link rel="stylesheet" href= "{{ asset('css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href= "{{ asset('css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
+    @if(isset($cssfile))
+        @foreach($cssfile as $css)
+            @if($css !== "")
+                <link rel="stylesheet" href={{asset($css)}} />
+            @endif
+        @endforeach
     @endif
     
     <title>@yield('title')</title>
@@ -31,7 +36,7 @@
             </div>
 
             <a class="navbar-brand" href="#">
-                <img src="images/logo.png" width="180" height="40"alt="">
+                <img src="{{ asset('images/logo.png') }}" width="180" height="40"alt="">
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,9 +69,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <form class="log_form" action="#" method="post">
+                    
                     <h2>LOG IN</h2>
-                    <input id="Email" placeholder="USER NAME" name="login_username" type="text">
-                    <input id="password" placeholder="PASSWORD" name="login_password" type="password">
+                    <input id="login_username" placeholder="USER NAME" name="login_username" type="text">
+                    <input id="login_password" placeholder="PASSWORD" name="login_password" type="password">
                     <button type="submit" class="submit">LOGIN</button>
                 </form>
             </div>
@@ -82,12 +88,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <form class="log_form" action="#" method="post">
+                <form class="log_form" action="/signup" method="post">
+                
                     <h2>SIGN UP</h2>
-                    <input id="username" placeholder="USER NAME" name="username" type="text">
-                    <input id="Email" placeholder="EMAIL" name="signup_email" type="text">
-                    <input id="password" placeholder="PASSWORD" name="signup_password" type="password">
-                    <input id="password_confirm" placeholder="CONFIRM PASSWORD" name="signup_password_confirm" type="password">
+                    <input id="signup_username" placeholder="USER NAME" name="signup_username" type="text">
+                    <input id="signup_email" placeholder="EMAIL" name="signup_email" type="text">
+                    <input id="signup_password" placeholder="PASSWORD" name="signup_password" type="password">
+                    <input id="signup_password_confirm" placeholder="CONFIRM PASSWORD" name="signup_password_confirm" type="password">
                     <button type="submit" class="submit">SIGNUP</button>
                 </form>
             </div>
@@ -108,13 +115,17 @@
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- js files -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/navbar.js"></script>
-    @if(isset($jsfile) && $jsfile !== "")
-        <script src={{$jsfile}}></script>
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/wow.min.js') }}"></script>
+    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js') }}" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/navbar.js') }}"></script>
+    @if(isset($jsfile))
+        @foreach($jsfile as $js)
+            @if($js !== "")
+                <script src={{asset($js)}}></script>
+            @endif
+        @endforeach
     @endif
 </body>
 

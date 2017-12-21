@@ -18,6 +18,7 @@ class CreatePROJECTTable extends Migration
             $table->string('Demo');
             $table->string('VideoLink');
             $table->string('Document');
+            $table->string('Description');
             $table->timestamps();
 
             $table->foreign('Ccode')

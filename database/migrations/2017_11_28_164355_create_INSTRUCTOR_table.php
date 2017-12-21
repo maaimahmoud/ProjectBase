@@ -15,9 +15,10 @@ class CreateINSTRUCTORTable extends Migration
     {
         Schema::create('INSTRUCTOR', function (Blueprint $table) {
             $table->string('ID')->nullable(false)->unique();
-            $table->boolean('TA/DR')->nullable(false);
+            $table->boolean('TADR')->nullable(false);
             $table->string('Description');
-            $table->string('Link To Profile');
+            $table->string('LinkToProfile');
+             $table->string('NAME');
             $table->timestamps();
 
             $table->primary('ID');
