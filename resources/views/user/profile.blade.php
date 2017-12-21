@@ -19,7 +19,7 @@
         <h2>List of Projects</h2>
         @foreach ($projectsList as $project)
 
-        <h2><a href="/{{$project->tid}}/{{$project->name}}">{{$project->name}}</a></h2>
+        <h2><a href="/projectProfile/{{$project->tid}}/{{$project->name}}">{{$project->name}}</a></h2>
 
         @endforeach
     @else
