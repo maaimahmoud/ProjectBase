@@ -36,7 +36,7 @@
 					<hr class="my-4 ">
 					<h6>CLASS <a href="#" class="badge badge-light">{{$class[0]['ExpectedGradYear']}}</a></h6>
 				    <hr class="my-4">
-					<h6>TEAM  <a href="#" class="badge badge-light">{{$projectteam[0]['Name']}}</a></h6>
+					<h6>TEAM  <a href="team/{{$projectteam[0]['ID']}}" class="badge badge-light">{{$projectteam[0]['Name']}}</a></h6>
 					<hr class="my-4">
 					<h6>COURSE <a href="#" class="badge badge-light">{{$projectcourse[0]['Name']}}</a></h6>
 					<hr class="my-4">

@@ -7,13 +7,13 @@
 
 
 @section('title')
-	Search
+	Wait Admin
 @endsection
 
 @section('content')
 
 	<div class="jumbotron">
-		<h1 class="display-3">Project Submitted! Waiting for Admin's approval.</h1>
+		<h1 class="display-3">Project is waiting for an Admin's approval. :) </h1>
 		<hr class="my-4">
 		</div>
 

@@ -28,6 +28,11 @@ class projectController extends Controller
         $rows = $con->prepare("SELECT * FROM PROJECT WHERE Name = ? AND TID = ?");
        $rows->execute(array($pname,$tid));
        $projectdata=$rows->fetchAll();
+
+       // if($projectdata[0]['Approved']==0)
+       //  return view('WaitAdmin');
+
+
       // echo '<pre>';
       //   print_r($projectdata);
       //   print(count($projectdata));
@@ -110,7 +115,7 @@ class projectController extends Controller
 
    	 	return view('projectProfile',compact('projectdata','class','projecttools','projectphotos','projectinst','projectteam','projectcourse'));
      }
-
+///////////////////////////////////////////////////////////////////////////////////////////////
      public function addproject($username)
      {
       // echo $username;
@@ -156,12 +161,55 @@ class projectController extends Controller
 
      }
 
-
+///////////////////////////////////////////////////////////////////////////////////////////
 
      public function createteam(Request $request,$username)
      {
       //do the check for prev teams later
         $con = DB::connection()->getPdo();
+          if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $request->teamname))
+       {
+          echo'<script language="javascript">';
+          echo'alert("[\'^£$%&*()}{@#~?><>,|=_+¬-] are invalid characters for team name")';
+          echo '</script>';
+          return $this->addproject($username);
+
+       }
+       //before i insert i need to make sure team list is unique
+       $team =$request->teammemebers;
+       array_push($team, $username);
+      
+      $rows = $con->prepare("SELECT ID FROM TEAM JOIN FORMS_TEAM ON TID=ID WHERE Susername = ?");
+      $rows->execute(array($username));
+      $studentteam=$rows->fetchAll();
+
+      $teamm= array();
+      
+      for($i=0; $i<count($studentteam); $i++)
+      {
+        $final=array();
+         $rows = $con->prepare("SELECT Susername FROM FORMS_TEAM where TID=?");
+      $rows->execute(array($studentteam[$i]['ID']));
+      $teamm=$rows->fetchAll();
+      for($j=0; $j<count($teamm);$j++)
+      {
+        array_push($final, $teamm[$j]['Susername']);
+      }
+   
+      if(count(array_diff($final, $team))==0)
+      {
+         echo'<script language="javascript">';
+          echo'alert("Team already Created ")';
+          echo '</script>';
+          return $this->addproject($username);
+
+      }
+
+
+
+
+      }
+
 
         $stmt = $con->prepare("INSERT INTO `team`(`Name`, `NoOfMembers`) VALUES (?,?)");
           $stmt->execute(array($request->teamname,count($request->teammemebers)+1));
@@ -248,12 +296,33 @@ class projectController extends Controller
        $class=$rows->fetchAll();
 
 
-       // $stmt = $con->prepare("INSERT INTO `project`(`Name`, `TID`,`Supervisor`,`Year`,`Ccode`,`Demo`,`VideoLink`,`Document`,`Logo`,`Description`) VALUES (?,?,null,?,?,null,?,?,?,?)");
-       // $stmt->execute(array($request->ProjectName,$request->team_combo,$class[0]['EXPECTEDGRADYEAR'],$request->req_combo,$request->ProjectDemo,$request->ProjectDocument,$request->logo,$request->ProjectDescription));
-       $tags=explode('-', $request->Projecttags, -1);
-       print_r();
+       $stmt = $con->prepare("INSERT INTO `project`(`Name`, `TID`,`Supervisor`,`Year`,`Ccode`,`Demo`,`VideoLink`,`Document`,`Logo`,`Description`) VALUES (?,?,null,?,?,null,?,?,?,?)");
+       $stmt->execute(array($request->ProjectName,$request->team_combo,$class[0]['EXPECTEDGRADYEAR'],$request->req_combo,$request->ProjectDemo,$request->ProjectDocument,$request->logo,$request->ProjectDescription));
 
-        // return view('WaitAdmin');
+       $tools=explode('-', $request->Projecttags, -1);
+       // print_r($tools);
+       $tools=array_unique($tools);
+        // print_r($tools);
+
+       for($i=0; $i<count($tools);$i++)
+      {
+        $stmt = $con->prepare("INSERT INTO `tools`(`PName`, `TID`,`Tools`) VALUES (?,?,?)");
+       $stmt->execute(array($request->ProjectName,$request->team_combo,$tools[$i]));
+       }
+
+        $imga=$request->imgs;
+
+      // echo '<pre>';
+      // print_r(count($request->imgs));
+      // echo '</pre> ';
+
+
+        $stmt = $con->prepare("INSERT INTO `photos`(`PName`, `TID`,`Photos`) VALUES (?,?,?)");
+       $stmt->execute(array($request->ProjectName,$request->team_combo,$imga[0]));
+       
+       
+
+        return view('WaitAdmin');
 
        //Insert into project
 

@@ -82,7 +82,7 @@
 			    <p><input placeholder="Paste document Link here"  name="ProjectDocument" id="ProjectDocument" class="form-control" ></p>
     			<h5>Project Images</h5>
     			<h6>(Optional)</h6>
-				   <input type="file" value="Select images:" name="imgs" multiple>
+				   <input type="file" value="Select images:" name="imgs[]" multiple>
 			   <h5>Project Logo</h5>
     			<h6>(Optional)</h6>
 				   <input type="file" value="Select Logo:" name="logo">

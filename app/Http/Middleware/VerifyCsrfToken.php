@@ -15,6 +15,6 @@ class VerifyCsrfToken extends Middleware
        '/search',
        '/createteam',
        '/submit',
-      '/WaitAdmin'
+       '/WaitAdmin'
     ];
 }

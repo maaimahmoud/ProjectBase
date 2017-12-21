@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/newProject', 'projectController@submitProject');
 
 Route::get('/search', function () {
     return view('search.search');
@@ -30,7 +29,7 @@ Route::get('/projectsub', function () {
 }); 
 
 Route::get('/WaitAdmin', function () {
-    return view('search.WaitAdmin');
+    return view('WaitAdmin');
 }); 
 Route::get('projectProfile/{tid}/{pname}','projectController@getproject');
 
