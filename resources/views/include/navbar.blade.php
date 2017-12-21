@@ -1,3 +1,6 @@
+<?php 
+if (!isset($_SESSION)) session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +21,11 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/navbar.css" />  --}}
     
-    {{--  @if(isset($cssfile))
+    {{--
+    @if(isset($cssfile))
         @foreach($cssfile as $css)
             @if($css !== "")
-                <link rel="stylesheet" href={{$css}} />
+                <link rel="stylesheet" href={{asset($css)}} />
             @endif
         @endforeach
     @endif  --}}
@@ -72,12 +76,31 @@
                     <li class="nav-item ">
                         <a class="nav-link">HOME</a>
                     </li>
+                    <?php print_r($_SESSION) ?>
+                    @if($_SESSION["username"] != '0')
+                   
+                        <div class="dropdown" class="nav-link" >
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            Hi {{$_SESSION["firstName"]}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">View Profile</a>
+                            @if($_SESSION["AdminStudent"] != '0')
+                                <a class="dropdown-item" href="#">View Managed Courses</a>
+                            @else
+                                <a class="dropdown-item" href="#">Submit Project</a>
+                            @endif
+                            <a class="dropdown-item" href="#" action="/signOut" method="get">Log Out</a>
+                          </div>
+                    </div>
+                      @else
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#login">LOGIN</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="modal" data-target="#signup">SIGNUP</a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -91,8 +114,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <form class="log_form" action="#" method="post">
-                    
+                <form class="log_form" action="/signIn" method="post">
                     <h2>LOG IN</h2>
                     <input id="login_username" placeholder="USER NAME" name="login_username" type="text">
                     <input id="login_password" placeholder="PASSWORD" name="login_password" type="password">
@@ -111,10 +133,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <form class="log_form" action="/signup" method="post">
-                
+                <form class="log_form" action="/signUp" method="post">
                     <h2>SIGN UP</h2>
                     <input id="signup_username" placeholder="USER NAME" name="signup_username" type="text">
+                    <input id="signup_firstname" placeholder="FIRST NAME" name="signup_firstname" type="text">
+                    <input id="signup_middlename" placeholder="MIDDLE NAME" name="signup_middlename" type="text">
+                    <input id="signup_lastname" placeholder="LAST NAME" name="signup_lastname" type="text">
                     <input id="signup_email" placeholder="EMAIL" name="signup_email" type="text">
                     <input id="signup_password" placeholder="PASSWORD" name="signup_password" type="password">
                     <input id="signup_password_confirm" placeholder="CONFIRM PASSWORD" name="signup_password_confirm" type="password">
@@ -124,6 +148,9 @@
           </div>
         </div>
       </div>
+
+
+      
 
     @yield('content')
 
@@ -148,10 +175,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/navbar.js"></script>  --}}
-    {{--  @if(isset($jsfile))
+    {{--
+    @if(isset($jsfile))
         @foreach($jsfile as $js)
             @if($js !== "")
-                <script src={{$js}}></script>
+                <script src={{asset($js)}}></script>
             @endif
         @endforeach
     @endif  --}}

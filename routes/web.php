@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::POST('/signUp', 'Accounts@signUp');
 
 Route::post('/searchpage', function () {
     return view('search');
@@ -74,3 +72,12 @@ Route::post('/{username}/createteam','projectController@createteam');
 Route::post('/{username}/submit','projectController@submitproj');
 // Route::get('/createteam',function () {
 //     echo "complete nonsense";});
+Route::get('/','Accounts@getCourses');
+
+Route::POST('/signIn','Accounts@signIn');
+
+Route::get('/signOut','Accounts@signOut');
+
+Route::get('/managedCourses',function(){
+	return view('Admin/managedCourses');
+});
