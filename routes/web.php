@@ -31,6 +31,7 @@ Route::get('/projectsub', function () {
 Route::get('/WaitAdmin', function () {
     return view('WaitAdmin');
 }); 
+
 Route::get('projectProfile/{tid}/{pname}','projectController@getproject');
 
 Route::get('{username}/addproject','projectController@addproject');
