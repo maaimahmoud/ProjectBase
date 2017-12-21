@@ -33,6 +33,22 @@ Route::get('/createCourse', 'adminController@getCreateCourseData');
 
 Route::post('/newCourse', 'adminController@newCourse');
 
-Route::get('/adminNote', function(){
-    return view('admin.notification');
+Route::get('/createAdmin', function(){
+    return view('admin.createAdmin');
 });
+
+Route::post('/newAdmin', 'adminController@newAdmin');
+
+Route::get('/user/{username}','UserController@showProfile');
+
+Route::get('/editprofile','UserController@editProfile');
+
+Route::post('/editprofile','UserController@setUserPassword');
+
+Route::get('/team/{teamID}','TeamController@showProfile');
+
+Route::get('/statistics','StatisticsController@showStatistics');
+
+// Route::get('/adminNote', function(){
+//     return view('admin.notification');
+// });
