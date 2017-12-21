@@ -159,12 +159,12 @@ class Accounts extends Controller
 					echo '</script>';
 				}
 
+			return redirect('/');
 		}
 
 
 
 	    function getCourses(){
-
         $con = DB::connection()->getPdo();
 		$stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP1%' And Term=1");
 		$stmt->execute();
@@ -312,20 +312,15 @@ $stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP2%' And Term=
 		return view('Admin/managedCourses',compact('coursesManagedByAdmin','projectList'));
 	}
 
-	public function setProjectApproved(request $request){
-		
+	public function setProjectApproved(Request $request){
 		$teamID = $request->teamID;
 		$projectName = $request->projectName;
 
-		echo $projectName;
-		echo $teamID;
+		$con = DB::connection()->getPdo();
 
-		// $con = DB::connection()->getPdo();
+		$stmt=$con->prepare('UPDATE PROJECT SET Approved = 1 WHERE Name = ? AND TID = ?');
+		$stmt->execute(array($projectName,$teamID));
 
-		// $stmt=$con->prepare("UPDATE `project` SET `approved`=1 WHERE Name=? AND TID=? ");
-		// $val=intval($teamID);
-		// $stmt->execute(array($projectName,$val));
-
-		// return $this->getProjects();
+		return $this->getCoursesManagedByAdmin();
 	}
 }

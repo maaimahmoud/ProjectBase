@@ -123,6 +123,45 @@ class searchController extends Controller
         return $searchResult;
     }
 
+    public function searchWalkThrough($searchValue){
+        $con = DB::connection()->getPdo();
+        
+        $searchValues = array();
+
+        for($i = 2; $i <= strlen($searchValue); $i++){
+            $searchValues[] = '%' . (str_split($searchValue, $i))[0] . '%';
+        }
+        
+        $searchValues = array_reverse ($searchValues);
+
+        $searchResult = array();
+
+        foreach ($searchValues as $value){
+            $stmt = $con->prepare("SELECT P.Name,TID,Supervisor,p.Year,p.Ccode,Demo,VideoLink,Description,Logo
+                                    FROM PROJECT as p, (SELECT c.code,c.Name,pt.Year
+                                                        FROM PROJECT_REQUIREMENT as pt,COURSE as c 
+                                                        WHERE pt.Ccode = c.code) as ptc
+                                    WHERE p.Ccode = ptc.code AND p.Year = ptc.Year AND ptc.Name Like ?");
+            $stmt->execute(array($value));
+            $row = $stmt->fetchAll();
+            $count = $stmt->rowCount();
+            $searchResult = array_merge($searchResult, $row);
+        }
+
+        $searchResult = array_map("unserialize", array_unique(array_map("serialize", $searchResult)));
+        
+        // echo '<pre>';
+        // print_r($searchResult);
+        // echo '</pre>';
+
+        if (count($searchResult) != 0){
+            return view('search', compact('searchResult'));
+        }
+        else{
+            return view('search');
+        }
+    }
+
     private function searchDepartmentName($searchValue)
     {
         $con = DB::connection()->getPdo();

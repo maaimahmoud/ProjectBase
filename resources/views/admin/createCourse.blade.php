@@ -62,7 +62,8 @@
                 </select>
             @endif
             <input type="number" name="code" maxlength="3" placeholder="course code" required>
-            <input type="text" name="name" minlengh="5" maxlength="255" maxlength="255" placeholder="course name" required>
+            <input type="text" name="name" minlengh="5" maxlength="255" placeholder="course name" required>
+            <input type="number" name="term" min="1" max="2"  placeholder="term" required>
             <input type="text" name="req_descreption" maxlength="255" placeholder="course descreption" required>
             <button type="submit">Create Course</button>
         </form>

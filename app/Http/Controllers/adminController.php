@@ -110,6 +110,7 @@ class adminController extends Controller
         $code = $deptcode . $request->code;
         $name = $request->name;
         $description = $request->req_descreption;
+        $term = $request->term;
 
         $stmt = $con->prepare("SELECT * FROM COURSE WHERE code = ?");
         $stmt->execute(array($code));
@@ -117,11 +118,12 @@ class adminController extends Controller
         $count = $stmt->rowCount();
  
         if(!isset($row) || count($row) == 0){
-            $stmt = $con->prepare("INSERT INTO COURSE(code, deptcode, name, description) VALUES(:zcode, :zdeptcode, :zname, :zdescription)");
+            $stmt = $con->prepare("INSERT INTO COURSE(code, deptcode, name, term, description) VALUES(:zcode, :zdeptcode, :zname, :zterm, :zdescription)");
             $stmt->execute(array(
                 'zcode' => $code,
                 'zdeptcode' => $deptcode,
                 'zname' => $name,
+                'zterm' => $term,
                 'zdescription' => $description,
             ));
             $note = ['course was added successfully', 'Go To dashboard', '/'];

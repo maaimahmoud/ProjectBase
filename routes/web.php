@@ -47,7 +47,7 @@ Route::get('/statistics','StatisticsController@showStatistics');
 
 Route::get('/');
 
-Route::get('/searchWalkThrough/{$searchValue}', 'searchController@searchCourseName');
+Route::get('/searchWalkThrough/{searchValue}', 'searchController@searchWalkThrough');
 
 Route::get('/projectsub', function () {
     return view('ProjectSub');

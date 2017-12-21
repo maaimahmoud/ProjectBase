@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class projectController extends Controller
 {
@@ -124,7 +125,11 @@ class projectController extends Controller
 ///////////////////////////////////////////////////////////////////////////////////////////////
      public function addproject($username)
      {
-      // echo $username;
+        if (!Session::has('username'))
+        return redirect('/');
+
+        if(Session::get('username') != $username)
+            return redirect('/');
 
         $con = DB::connection()->getPdo();
 
@@ -171,7 +176,12 @@ class projectController extends Controller
 
      public function createteam(Request $request,$username)
      {
-      //do the check for prev teams later
+      if (!Session::has('username'))
+      return redirect('/');
+
+      if(Session::get('username') != $username)
+          return redirect('/');
+      // //do the check for prev teams later
         $con = DB::connection()->getPdo();
           if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $request->teamname))
        {
@@ -254,6 +264,13 @@ class projectController extends Controller
 
     public function submitproj(Request $request, $username)
     {
+
+      if (!Session::has('username'))
+      return redirect('/');
+
+      if(Session::get('username') != $username)
+          return redirect('/');
+
        $con = DB::connection()->getPdo();
        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $request->ProjectName))
        {

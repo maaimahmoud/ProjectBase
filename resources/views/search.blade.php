@@ -40,9 +40,6 @@
                 @foreach($searchResult as $project)
                     <div class="card">
                         <a href="/projectProfile/{{$project['TID']}}/{{$project['Name']}}">
-                            {{--  {{ csrf_field() }}  --}}
-                            {{--  <input type="hidden" value={{$project['TID']}} name="tid">
-                            <input type="hidden" value={{$project['Name']}} name="pname">  --}}
                             <img width="100px" height="100px" class="project-logo" src="images/t.png">
                             <h4>{{$project['Name']}}</h4>
                             <div class="project-description">

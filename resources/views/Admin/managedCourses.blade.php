@@ -52,10 +52,14 @@
               <td>{{$project[7]}}</td>
               <td>{{$project[8]}}</td>
               <form method="post" action="/projectApproved">
-                {{ csrf_field() }}
-                <input type="hidden" value={{$project[1]}} name="teamID">
-                <input type="hidden"  value={{$project[0]}} name="projectName">
-              <td> <button type="submit" @if(!($project[9])) disabled="true" @endif >Approve</button> </td>
+                  {{ csrf_field() }}
+                  <input type="hidden" value="{{$project[1]}}" name="teamID">
+                  <input type="hidden"  value="{{$project[0]}}" name="projectName">
+                  @if($project['Approved'] == 0)
+                      <td><button type="submit">Approve</button></td>
+                  @else
+                      <td><button type="submit" disabled>Approve</button></td>
+                  @endif
               </form>
             </tr>
           @endforeach        
