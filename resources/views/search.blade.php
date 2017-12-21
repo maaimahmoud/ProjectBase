@@ -39,16 +39,16 @@
             @if(isset($searchResult))
                 @foreach($searchResult as $project)
                     <div class="card">
-                        <form action="/searchProjectProfile" method="post">
-                            {{ csrf_field() }}
-                            <input type="hidden" value={{$project['TID']}} name="tid">
-                            <input type="hidden" value={{$project['Name']}} name="pname">
+                        <a href="/projectProfile/{{$project['TID']}}/{{$project['Name']}}">
+                            {{--  {{ csrf_field() }}  --}}
+                            {{--  <input type="hidden" value={{$project['TID']}} name="tid">
+                            <input type="hidden" value={{$project['Name']}} name="pname">  --}}
                             <img width="100px" height="100px" class="project-logo" src="images/t.png">
                             <h4>{{$project['Name']}}</h4>
                             <div class="project-description">
-                                <button style="border: none; background-color: transparent; width: 470px; height: 109px;" type="submit">{{$project['Description']}}</button>
+                                <p>{{$project['Description']}}</p>
                             </div>
-                        </form>
+                        </a>
                     </div>
                 @endforeach
             @else

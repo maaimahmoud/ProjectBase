@@ -35,7 +35,7 @@
 					<span class="fa fa-star"></span>
 					<span class="fa fa-star"></span>
 					</p>
-					
+					@if(isset($class) || count($class) > 0)
 					<hr class="my-4 ">
 					<h6>CLASS <a href="#" class="badge badge-light">{{$class[0]['ExpectedGradYear']}}</a></h6>
 				    <hr class="my-4">
@@ -43,6 +43,7 @@
 					<hr class="my-4">
 					<h6>COURSE <a href="#" class="badge badge-light">{{$projectcourse[0]['Name']}}</a></h6>
 					<hr class="my-4">
+					@endif
 
 					<h6>INSTRUCTORS<p>
 							@for($i=0; $i<count($projectinst); $i++ )

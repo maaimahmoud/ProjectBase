@@ -1,6 +1,5 @@
 @extends('include.navbar')
 
-{{--  <?php $_SESSION = session()->all(); ?>  --}}
 
 <?php
 	$cssfile = array("css/project/project_sub.css");
@@ -62,17 +61,7 @@
 			    <h5>Project Description</h5>
 			    <h6>(Required)</h6>
     			<textarea placeholder="Awesome stuff about your project..." name="ProjectDescription" id="ProjectDescription" rows="7" class="form-control" required ></textarea>
-    			{{-- @if($grad==1) --}}
-    		{{-- 	<h5>Supervisor</h5>
-			    <h6>(Required IF graduation project)</h6>
-				<div class="list-group" style="margin:10px;">
-					<select class="btn btn-secondary custom-select form-control " id="sup_combo" name="sup_combo">
-						@for($i=0;$i<count($studentsupervisors);$i++)
-					        <option value={{$studentsupervisors[$i]['ID']}}>{{$studentsupervisors[$i]['NAME']}}</option>
-					        @endfor
-					</select>
-				</div> --}}
-			    {{-- @endif --}}
+
 				<h5>Projet Tags</h5>
     			<h6>(Optional)</h6>
     			<textarea placeholder="This will help people ind your project. Write the tags followed  by - . " name="Projecttags" id="Projecttags" rows="2" class="form-control invalid" ></textarea> 

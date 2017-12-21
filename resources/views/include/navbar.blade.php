@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
-    <!-- css files -->
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
     <link rel="stylesheet" href= "{{ asset('css/font-awesome.min.css') }}"/>
@@ -46,7 +44,7 @@
                 </form>
             </div>
 
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/logo.png') }}" width="180" height="40"alt="">
             </a>
 
@@ -58,7 +56,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item ">
-                        <a class="nav-link">HOME</a>
+                        <a  href="/" class="nav-link">HOME</a>
                     </li>
                     
                     @if(Session::has('username'))
@@ -70,9 +68,14 @@
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="/user/{{Session::get('username')}}">View Profile</a>
                             @if(Session::has('isAdmin'))
+                                @if(Session::has('isTA'))
+                                    <a class="dropdown-item" href="/createProjectRequirment">Add Requirement</a>
+                                    <a class="dropdown-item" href="/createCourse">Add Course</a>
+                                    <a class="dropdown-item" href="/createAdmin">Add Admin</a>
+                                @endif
                                 <a class="dropdown-item" href="/managedCourses">View Managed Courses</a>
                             @else
-                                <a class="dropdown-item" href="#">Submit Project</a>
+                                <a class="dropdown-item" href="/{{Session::get('username')}}/addproject">Submit Project</a>
                             @endif
                             <a class="dropdown-item" href="/signOut">Log Out</a>
                           </div>
@@ -90,7 +93,6 @@
         </div>
     </nav>
 
-    <!-- LogIn -->
     <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -109,7 +111,6 @@
         </div>
     </div>
 
-    <!-- SignUp -->
     <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -134,9 +135,6 @@
         </div>
       </div>
 
-
-      
-
     @yield('content')
 
     <footer class="text-center">
@@ -148,8 +146,6 @@
         </div>
     </footer>
 
-    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <!-- js files -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/wow.min.js') }}"></script>
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js') }}" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>

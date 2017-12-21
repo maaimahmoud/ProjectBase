@@ -29,8 +29,13 @@ class projectController extends Controller
        $rows->execute(array($pname,$tid));
        $projectdata=$rows->fetchAll();
 
-       // if($projectdata[0]['Approved']==0)
-       //  return view('WaitAdmin');
+      //  echo '<pre>';
+      //  print_r($projectdata);
+      //  echo '</pre>';
+      
+
+       if($projectdata[0]['Approved']==0)
+        return view('WaitAdmin');
 
 
       // echo '<pre>';
@@ -91,18 +96,12 @@ class projectController extends Controller
    				$projectinst[$i]['NAME']="DR ".$projectinst[$i]['NAME'];
    		}
 
-   		// echo '<pre>';
-   		// print_r($projectinst);
-     //  PRINT(count($projectinst));
-   		// echo '</pre> ';
-
    	 	$rows = $con->prepare("SELECT DISTINCT ExpectedGradYear FROM (Student JOIN forms_team ON Susername=username) JOIN PROJECT ON forms_team.TID=PROJECT.TID WHERE Name = ? AND PROJECT.TID = ?");
        $rows->execute(array($pname,$tid));
        $class=$rows->fetchAll();
      	// echo '<pre>';
-  	  	// print_r($class);
+  	  // 	print_r($class);
    	 	// echo '</pre> ';
-
 
        $rows = $con->prepare("SELECT Name,ID FROM TEAM  WHERE ID = ?");
        $rows->execute(array($tid));
@@ -116,12 +115,12 @@ class projectController extends Controller
    	 	return view('projectProfile',compact('projectdata','class','projecttools','projectphotos','projectinst','projectteam','projectcourse'));
      }
 
-     public function searchGetProject(Request $request){
-        $tid = $request->tid;
-        $pname = $request->pname;
+    //  public function searchGetProject(Request $request){
+    //     $tid = $request->tid;
+    //     $pname = $request->pname;
 
-        projectController::getproject($tid, $pname);
-     }
+    //     projectController::getproject($tid, $pname);
+    //  }
 ///////////////////////////////////////////////////////////////////////////////////////////////
      public function addproject($username)
      {
@@ -317,15 +316,14 @@ class projectController extends Controller
        $stmt->execute(array($request->ProjectName,$request->team_combo,$tools[$i]));
        }
 
-        $imga=$request->imgs;
+if(isset($request->imgs[0]))
+{
+  
+  $stmt = $con->prepare("INSERT INTO `photos`(`PName`, `TID`,`Photos`) VALUES (?,?,?)");
+  $stmt->execute(array($request->ProjectName,$request->team_combo,$request->imgs[0]));
 
-      // echo '<pre>';
-      // print_r(count($request->imgs));
-      // echo '</pre> ';
+}
 
-
-        $stmt = $con->prepare("INSERT INTO `photos`(`PName`, `TID`,`Photos`) VALUES (?,?,?)");
-       $stmt->execute(array($request->ProjectName,$request->team_combo,$imga[0]));
        
        
 

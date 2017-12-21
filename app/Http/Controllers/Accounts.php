@@ -270,97 +270,62 @@ $stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP2%' And Term=
 	}
 
 
-	function getCoursesManagedByAdmin(){
-
-		$data = session()->all();
-
-		if (!isset($_SESSION)) {
-			session_start();
-			$_SESSION["username"]=$data["username"];
-			$_SESSION["firstName"]=$data["firstName"];
-			$_SESSION["AdminStudent"]=$data["AdminStudent"];
-
-		}
+	public function getCoursesManagedByAdmin(){
 
 		$con = DB::connection()->getPdo();
 
-		$stmt=$con->prepare("SELECT Code,Name FROM course,admin_manages WHERE Ccode=Code AND Ausername=? AND YEAR= ?");
-		$val=$_SESSION["username"];
-		$val2=date('Y');
-		$stmt->execute(array($val,$val2));
+		$stmt=$con->prepare("SELECT Code,Name FROM course,admin_manages WHERE Ccode = Code AND Ausername = ? AND Year = 2020");
+		$val= Session::get('username');
+		// $val2=date('Y');
+		$stmt->execute(array($val));
 		$row = $stmt->fetchAll();
 		$count = $stmt->rowCount();
-
 
 		$coursesManagedByAdmin = array();
 
 		if (isset($row)){
 		    $coursesManagedByAdmin = $row;
 		}
-
 
 		return view('Admin/managedCourses',compact('coursesManagedByAdmin'));
 	}
 
 	public function getProjects(Request $request){
 
-		$data = session()->all();
-
-		if (!isset($_SESSION)) {
-			session_start();
-			$_SESSION["username"]=$data["username"];
-			$_SESSION["firstName"]=$data["firstName"];
-			$_SESSION["AdminStudent"]=$data["AdminStudent"];
-
-		}
-
 		$con = DB::connection()->getPdo();
 
-		$stmt=$con->prepare("SELECT Code,Name FROM course,admin_manages WHERE Ccode=Code AND Ausername=? AND YEAR= ?");
-		$val=$_SESSION["username"];
-		$val2=date('Y');
-		$stmt->execute(array($val,$val2));
-		$row = $stmt->fetchAll();
-		$count = $stmt->rowCount();
-
-
-		$coursesManagedByAdmin = array();
-
-		if (isset($row)){
-		    $coursesManagedByAdmin = $row;
-		}
-
-		
-		$stmt=$con->prepare("SELECT * FROM project WHERE Ccode=? AND Year=?");
+		$stmt=$con->prepare("SELECT * FROM project WHERE Ccode=? AND Year= 2020");
 		$val=$request->course;
-		$val2=date('Y');
-		$stmt->execute(array($val,$val2));
+		// $val2=date('Y');
+		$stmt->execute(array($val));
 		$row = $stmt->fetchAll();
 		$count = $stmt->rowCount();
 
-
-		$coursesList = array();
+		$projectList = array();
 
 		if (isset($row)){
-		    $coursesList = $row;
+		    $projectList = $row;
 		}
 
-		return view('Admin/managedCourses',compact('coursesManagedByAdmin','coursesList'));
+		$projectList = array_map("unserialize", array_unique(array_map("serialize", $projectList)));
+
+		return view('Admin/managedCourses',compact('coursesManagedByAdmin','projectList'));
 	}
 
-	public function setProjectApproved(request $request,$teamID,$projectName){
-
-		$con = DB::connection()->getPdo();
-
-		$stmt=$con->prepare("UPDATE `project` SET `approved`=1 WHERE Name=? AND TID=? ");
-		$val=intval($teamID);
-		$stmt->execute(array($projectName,$val));
-		$row = $stmt->fetchAll();
-		$count = $stmt->rowCount();
-
-		return $this->getCoursesManagedByAdmin();
-
+	public function setProjectApproved(request $request){
 		
-	}
+		$teamID = $request->teamID;
+		$projectName = $request->projectName;
 
+		echo $projectName;
+		echo $teamID;
+
+		// $con = DB::connection()->getPdo();
+
+		// $stmt=$con->prepare("UPDATE `project` SET `approved`=1 WHERE Name=? AND TID=? ");
+		// $val=intval($teamID);
+		// $stmt->execute(array($projectName,$val));
+
+		// return $this->getProjects();
+	}
 }

@@ -31,9 +31,7 @@ Route::get('/createCourse', 'adminController@getCreateCourseData');
 
 Route::post('/newCourse', 'adminController@newCourse');
 
-Route::get('/createAdmin', function(){
-    return view('admin.createAdmin');
-});
+Route::get('/createAdmin', 'adminController@createAdmin');
 
 Route::post('/newAdmin', 'adminController@newAdmin');
 
@@ -47,13 +45,9 @@ Route::get('/team/{teamID}','TeamController@showProfile');
 
 Route::get('/statistics','StatisticsController@showStatistics');
 
-// Route::get('/adminNote', function(){
-//     return view('admin.notification');
-// });
+Route::get('/');
 
-Route::get('/projectProfile', function () {
-    return view('projectProfile');
-});
+Route::get('/searchWalkThrough/{$searchValue}', 'searchController@searchCourseName');
 
 Route::get('/projectsub', function () {
     return view('ProjectSub');
@@ -80,6 +74,8 @@ Route::POST('/signIn','Accounts@signIn');
 
 Route::get('/signOut','Accounts@signOut');
 
-Route::get('/managedCourses',function(){
-	return view('Admin/managedCourses');
-});
+Route::post('/listOfProjects', 'Accounts@getProjects');
+
+Route::get('/managedCourses', 'Accounts@getCoursesManagedByAdmin');
+
+Route::post('/projectApproved', 'Accounts@setProjectApproved');

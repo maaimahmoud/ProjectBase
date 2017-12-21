@@ -6,11 +6,30 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Session;
+use Hash;
 
 class adminController extends Controller
 {
+
+    public function createAdmin(){
+        if (!Session::has('isTA')){
+            return redirect('/');
+        }
+
+        $con = DB::connection()->getPdo();
+        
+        $stmt = $con->prepare("SELECT code FROM COURSE WHERE 1");
+        $stmt->execute(array());
+        $row = $stmt->fetchAll();
+        $count = $stmt->rowCount();
+
+        $courses = $row;
+
+        return view('admin.createAdmin', compact('courses'));
+    }
+
     private function getAdminCourses(){
-        if (!(/Session::has('isAdmin')){
+        if (!Session::has('isTA')){
             return redirect('/');
         }
         $username = session('usename');
@@ -21,12 +40,11 @@ class adminController extends Controller
         $row = $stmt->fetchAll();
         $count = $stmt->rowCount();
 
-        //$adminCourses = array_map("unserialize", array_unique(array_map("serialize", $row)));
         return $row;
     }
 
     public function getCreateRequirementData(){
-        if (!(/Session::has('isAdmin')){
+        if (!Session::has('isTA')){
             return redirect('/');
         }
         $adminCourses = adminController::getAdminCourses();
@@ -34,7 +52,7 @@ class adminController extends Controller
     }
 
     public function newRequirement(Request $request){
-        if (!(/Session::has('isAdmin')){
+        if (!Session::has('isTA')){
             return redirect('/');
         }
        $con = DB::connection()->getPdo();
@@ -76,7 +94,7 @@ class adminController extends Controller
     }
 
     public function getCreateCourseData(){
-        if (!(/Session::has('isAdmin')){
+        if (!Session::has('isTA')){
             return redirect('/');
         }
         $Departments = adminController::getDepartments();
@@ -84,7 +102,7 @@ class adminController extends Controller
     }
 
     public function newCourse(Request $request){
-        if (!(/Session::has('isAdmin')){
+        if (!Session::has('isTA')){
             return redirect('/');
         }
         $con = DB::connection()->getPdo();
@@ -116,7 +134,7 @@ class adminController extends Controller
     }
 
     public function newAdmin(Request $request){
-        if (!(/Session::has('isAdmin')){
+        if (!Session::has('isTA')){
             return redirect('/');
         }
         $con = DB::connection()->getPdo();
@@ -124,7 +142,9 @@ class adminController extends Controller
         $password = $request->password;
         $email = $request->email;
         $st_ta = (int)$request->st_ta;
+        $courses = $request->courses;
         
+        $hashed = Hash::make($password);
 
         $stmt = $con->prepare("SELECT * FROM ADMIN WHERE username = ?");
         $stmt->execute(array($username));
@@ -140,7 +160,7 @@ class adminController extends Controller
             $stmt = $con->prepare("INSERT INTO USER(username, password) VALUES(:zusername, :zpassword)");
             $stmt->execute(array(
                 'zusername' => $username,
-                'zpassword' => $password,
+                'zpassword' => $hashed,
             ));
 
             $stmt = $con->prepare("INSERT INTO ADMIN(username, email, STIN) VALUES(:zusername, :zemail, :zst_in)");
@@ -150,6 +170,15 @@ class adminController extends Controller
                 'zst_in' => $st_ta,
             ));
 
+            foreach($courses as $course){
+                $stmt = $con->prepare("INSERT INTO ADMIN_MANAGES(Ausername, year, Ccode) VALUES(:zusername, :zyear, :Ccode)");
+                $stmt->execute(array(
+                    'zusername' => $username,
+                    'zyear' => 2020,
+                    'Ccode' => $course,
+                ));    
+            }
+                
             $note = ['admin was added successfully', 'Go To dashboard', '/'];
             return view('admin.notification', compact('note'));
         }

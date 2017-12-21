@@ -83,6 +83,14 @@
                 <option value="1">Teaching Assistant</option>
                 <option value="0">Student</option>
             </select>
+            @for($i=0;$i<count($courses);$i++)
+                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" id="teammates" name="teammates">
+                <input type="checkbox" class="custom-control-input" name="courses[]" value={{$courses[$i]['code']}}>
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">{{$courses[$i]['code']}}</span>
+                </label>
+			@endfor
+            <br>
             <button type="submit">Create Admin</button>
         </form>
     </section>
