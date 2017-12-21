@@ -1,5 +1,7 @@
 @extends('include.navbar')
 
+<?php $_SESSION = session()->all(); ?>
+
 @section('title')
     Search
 @endsection
@@ -35,26 +37,20 @@
                 </form>
             </div>
             @if(isset($searchResult))
-                @for ($i = 0; $i < ceil(count($searchResult) / 3); $i++)
-                    @if($i == (ceil(count($searchResult) / 3) - 1))
-                        <?php $max_j = 3*$i + (count($searchResult) - 3*$i); ?>
-                    @else
-                        <?php $max_j = 3*$i + 3; ?>
-                    @endif
-                    <div class="row ">
-                        @for ($j = 3*$i; $j < $max_j; $j++)
-                            <div class="col-md-3 col-sm-6 card">
-                                <a href="#">
-                                    <img width="100px" height="100px" class="project-logo" src="images/t.png">
-                                    <h4>{{$searchResult[$j]['Name']}}</h4>
-                                    <div class="project-description">
-                                        <p>{{$searchResult[$j]['Document']}}</p>
-                                    </div>
-                                </a>
+                @foreach($searchResult as $project)
+                    <div class="card">
+                        <form action="/searchProjectProfile" method="post">
+                            {{ csrf_field() }}
+                            <input type="hidden" value={{$project['TID']}} name="tid">
+                            <input type="hidden" value={{$project['Name']}} name="pname">
+                            <img width="100px" height="100px" class="project-logo" src="images/t.png">
+                            <h4>{{$project['Name']}}</h4>
+                            <div class="project-description">
+                                <button style="border: none; background-color: transparent; width: 470px; height: 109px;" type="submit">{{$project['Description']}}</button>
                             </div>
-                        @endfor
+                        </form>
                     </div>
-                @endfor
+                @endforeach
             @else
                 <div style="height: 405px; text-align: center;"><h1 style="margin: 50px auto; color: #999;">Sorry No Result Found For this Query</h1></div>
             @endif

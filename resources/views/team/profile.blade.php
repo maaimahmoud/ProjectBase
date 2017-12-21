@@ -1,5 +1,7 @@
 @extends('include.navbar')
 
+<?php $_SESSION = session()->all(); ?>
+
 @section('title')
     <?php echo ($teamName !== "NULL")?$teamName:'Team Not Found' ?>
 @endsection

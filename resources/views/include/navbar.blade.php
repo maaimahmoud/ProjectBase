@@ -1,6 +1,3 @@
-<?php 
-if (!isset($_SESSION)) session_start();
- ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,19 +13,6 @@ if (!isset($_SESSION)) session_start();
     <link rel="stylesheet" href= "{{ asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
-    {{--  <link rel="stylesheet" href="css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/navbar.css" />  --}}
-    
-    {{--
-    @if(isset($cssfile))
-        @foreach($cssfile as $css)
-            @if($css !== "")
-                <link rel="stylesheet" href={{asset($css)}} />
-            @endif
-        @endforeach
-    @endif  --}}
     @if(isset($cssfile))
         @foreach($cssfile as $css)
             @if($css !== "")
@@ -76,19 +60,21 @@ if (!isset($_SESSION)) session_start();
                     <li class="nav-item ">
                         <a class="nav-link">HOME</a>
                     </li>
-                    @if(isset($_SESSION["username"]))
+                    
+                    @if(Session::has('username'))
+                   
                         <div class="dropdown" class="nav-link" >
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                            Hi {{$_SESSION["FirstName"]}}
+                            Hi {{Session::get('firstName')}}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/user/{{$_SESSION['username']}}">View Profile</a>
-                            @if(isset($_SESSION["AdminStudent"]))
-                                <a class="dropdown-item" href="#">View Managed Courses</a>
+                            <a class="dropdown-item" href="/user/{{Session::get('username')}}">View Profile</a>
+                            @if(Session::has('isAdmin'))
+                                <a class="dropdown-item" href="/managedCourses">View Managed Courses</a>
                             @else
                                 <a class="dropdown-item" href="#">Submit Project</a>
                             @endif
-                            <a class="dropdown-item" href="/signOut" action="/signOut" method="get">Log Out</a>
+                            <a class="dropdown-item" href="/signOut">Log Out</a>
                           </div>
                     </div>
                       @else
@@ -137,9 +123,10 @@ if (!isset($_SESSION)) session_start();
                     <input id="signup_firstname" placeholder="FIRST NAME" name="signup_firstname" type="text">
                     <input id="signup_middlename" placeholder="MIDDLE NAME" name="signup_middlename" type="text">
                     <input id="signup_lastname" placeholder="LAST NAME" name="signup_lastname" type="text">
-                    <input id="signup_email" placeholder="EMAIL" name="signup_email" type="text">
+                    <input id="signup_email" placeholder="EMAIL" name="signup_email" type="email">
                     <input id="signup_password" placeholder="PASSWORD" name="signup_password" type="password">
                     <input id="signup_password_confirm" placeholder="CONFIRM PASSWORD" name="signup_password_confirm" type="password">
+                    <input id="expected_year" placeholder="GRADUATION YEAR" name="signup_egy" type="number" maxlength="4" min="1993" max="2021">
                     <button type="submit" class="submit">SIGNUP</button>
                 </form>
             </div>
@@ -168,19 +155,6 @@ if (!isset($_SESSION)) session_start();
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js') }}" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/navbar.js') }}"></script>
-    {{--  <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/navbar.js"></script>  --}}
-    {{--
-    @if(isset($jsfile))
-        @foreach($jsfile as $js)
-            @if($js !== "")
-                <script src={{asset($js)}}></script>
-            @endif
-        @endforeach
-    @endif  --}}
     @if(isset($jsfile))
         @foreach($jsfile as $js)
             @if($js !== "")

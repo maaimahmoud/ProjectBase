@@ -37,6 +37,10 @@ class searchController extends Controller
 
         $searchResult = array_map("unserialize", array_unique(array_map("serialize", $searchResult)));
 
+        // echo '<pre>';
+        // print_r($searchResult);
+        // echo '</pre>';
+
         if (count($searchResult) != 0){
             return view('search', compact('searchResult'));
         }

@@ -14,7 +14,7 @@ class projectController extends Controller
 
      public function getproject($tid,$pname)
      {
- 
+
      	$projectphotos= array();
      	$projecttools= array();
      	$projectinst= array();
@@ -114,6 +114,13 @@ class projectController extends Controller
      }
 
    	 	return view('projectProfile',compact('projectdata','class','projecttools','projectphotos','projectinst','projectteam','projectcourse'));
+     }
+
+     public function searchGetProject(Request $request){
+        $tid = $request->tid;
+        $pname = $request->pname;
+
+        projectController::getproject($tid, $pname);
      }
 ///////////////////////////////////////////////////////////////////////////////////////////////
      public function addproject($username)

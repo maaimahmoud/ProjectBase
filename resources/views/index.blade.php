@@ -1,5 +1,7 @@
 @extends('include.navbar')
 
+<?php $_SESSION = session()->all(); ?>
+
 @section('title')
     ProjectBase
 @endsection
@@ -17,7 +19,6 @@
 
     <div class="explore-area">  
     	<button id="explore" type="button" class="explore-button btn btn-default btn-lg" data-scroll="walk-through">EXPLORE</button>
-        <p>If you have an account You can<br> <a href="#" data-toggle="modal" data-target="#login">Sign in</a> or <a href="#" id="explore-sign-up" data-toggle="modal" data-target="#signup">Create a new account</a></p>
     </div>
 
     <div class="walk-through" id="walk-through-section">

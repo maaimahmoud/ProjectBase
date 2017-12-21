@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class adminController extends Controller
 {
     private function getAdminCourses(){
+        if (!(/Session::has('isAdmin')){
+            return redirect('/');
+        }
         $username = session('usename');
         $con = DB::connection()->getPdo();
 
@@ -22,11 +26,17 @@ class adminController extends Controller
     }
 
     public function getCreateRequirementData(){
+        if (!(/Session::has('isAdmin')){
+            return redirect('/');
+        }
         $adminCourses = adminController::getAdminCourses();
         return view('admin.createRequirement', compact('adminCourses'));
     }
 
     public function newRequirement(Request $request){
+        if (!(/Session::has('isAdmin')){
+            return redirect('/');
+        }
        $con = DB::connection()->getPdo();
        $name = $request->req_name;
        $year = $request->req_year;
@@ -46,7 +56,7 @@ class adminController extends Controller
                 'zdescription' => $description,
                 'zccode' => $ccode,
             ));
-            $note = ['project requirement was added successfully', 'Go To dashboard', '#'];
+            $note = ['project requirement was added successfully', 'Go To dashboard', '/'];
             return view('admin.notification', compact('note'));
         }
         else{
@@ -66,11 +76,17 @@ class adminController extends Controller
     }
 
     public function getCreateCourseData(){
+        if (!(/Session::has('isAdmin')){
+            return redirect('/');
+        }
         $Departments = adminController::getDepartments();
         return view('admin.CreateCourse', compact('Departments'));
     }
 
     public function newCourse(Request $request){
+        if (!(/Session::has('isAdmin')){
+            return redirect('/');
+        }
         $con = DB::connection()->getPdo();
         $deptcode = $request->dept_code;
         $code = $deptcode . $request->code;
@@ -90,7 +106,7 @@ class adminController extends Controller
                 'zname' => $name,
                 'zdescription' => $description,
             ));
-            $note = ['course was added successfully', 'Go To dashboard', '#'];
+            $note = ['course was added successfully', 'Go To dashboard', '/'];
             return view('admin.notification', compact('note'));
         }
         else{
@@ -100,10 +116,15 @@ class adminController extends Controller
     }
 
     public function newAdmin(Request $request){
+        if (!(/Session::has('isAdmin')){
+            return redirect('/');
+        }
         $con = DB::connection()->getPdo();
         $username = $request->username;
+        $password = $request->password;
         $email = $request->email;
         $st_ta = (int)$request->st_ta;
+        
 
         $stmt = $con->prepare("SELECT * FROM ADMIN WHERE username = ?");
         $stmt->execute(array($username));
@@ -116,14 +137,20 @@ class adminController extends Controller
         $count = $stmt->rowCount();
  
         if(!isset($row) || count($row) == 0){
-            $stmt = $con->prepare("INSERT INTO ADMIN(username, email, ST_IN) VALUES(:zusername, :zemail, :zst_in)");
+            $stmt = $con->prepare("INSERT INTO USER(username, password) VALUES(:zusername, :zpassword)");
+            $stmt->execute(array(
+                'zusername' => $username,
+                'zpassword' => $password,
+            ));
+
+            $stmt = $con->prepare("INSERT INTO ADMIN(username, email, STIN) VALUES(:zusername, :zemail, :zst_in)");
             $stmt->execute(array(
                 'zusername' => $username,
                 'zemail' => $email,
                 'zst_in' => $st_ta,
             ));
 
-            $note = ['admin was added successfully', 'Go To dashboard', '#'];
+            $note = ['admin was added successfully', 'Go To dashboard', '/'];
             return view('admin.notification', compact('note'));
         }
         else{

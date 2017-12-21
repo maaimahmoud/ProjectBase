@@ -1,4 +1,7 @@
 @extends('include.navbar')
+
+{{--  <?php $_SESSION = session()->all(); ?>  --}}
+
 <?php
 	$cssfile = array("css/project/project_profile.css");
 	$jsfile = array("");

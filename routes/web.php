@@ -63,6 +63,8 @@ Route::get('/WaitAdmin', function () {
     return view('WaitAdmin');
 }); 
 
+Route::post('/searchProjectProfile','projectController@searchGetProject');
+
 Route::get('projectProfile/{tid}/{pname}','projectController@getproject');
 
 Route::get('{username}/addproject','projectController@addproject');

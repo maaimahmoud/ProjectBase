@@ -77,6 +77,7 @@
         <form action="/newAdmin" method="post">
             {{ csrf_field() }}
             <input type="text" name="username" minlength="5" maxlength="50" placeholder="username" required>
+            <input type="password" name="password" minlength="8" maxlength="50" placeholder="password" required>
             <input type="email" name="email" maxlength="255" placeholder="email" required>
             <select id="st_ta" name="st_ta" required>
                 <option value="1">Teaching Assistant</option>

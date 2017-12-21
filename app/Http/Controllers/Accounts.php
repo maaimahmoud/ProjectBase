@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-use Illuminate\Support\Facades\Crypt;
+use Hash;
 use Illuminate\Support\Facades\Session;
 
 
@@ -23,10 +23,6 @@ class Accounts extends Controller
 		$stmt->execute(array($val));
 		$row = $stmt->fetchAll();
 		$count = $stmt->rowCount();
-
-
-		$username='0';
-		$firstName='0';
 
 		if ($count !== 0)
 		{
@@ -46,20 +42,21 @@ class Accounts extends Controller
 					}
 					else
 					{
-						 $encrypted = Crypt::encryptString($request->signup_password);
+						 $hashed = Hash::make($request->signup_password);
 
 						 $stmt=$con->prepare("INSERT INTO `user`(`username`, `Password`) VALUES (?,?)");
-						 $stmt->execute(array($request->signup_username,$encrypted));
+						 $stmt->execute(array($request->signup_username,$hashed));
 
 
-					     $stmt = $con->prepare("INSERT INTO `student`(`username`, `email`, `FirstName`, `MiddleName`, `LastName`, `SEM/CREDIT`, `ExpectedGradYear`) VALUES (?,?,?,?,?,0,2020)");		     
+					     $stmt = $con->prepare("INSERT INTO `student`(`username`, `email`, `FirstName`, `MiddleName`, `LastName`, `ExpectedGradYear`) VALUES (?,?,?,?,?,?)");		     
 
-						 $stmt->execute(array($request->signup_username,$request->signup_email,$request->signup_firstname,$request->signup_middlename,$request->signup_lastname));
+						 $stmt->execute(array($request->signup_username,$request->signup_email,$request->signup_firstname,$request->signup_middlename,$request->signup_lastname, $request->signup_egy));
 
 					
 
-						$username=$request->signup_username;
-						$firstName=$request->signup_firstname;
+						Session::put('username',$request->signup_username);
+						Session::put('firstName',$request->signup_firstname);
+						return redirect('/');
 					}
 				}
 			else
@@ -69,20 +66,13 @@ class Accounts extends Controller
 				echo '</script>';
 			}
 		}
-
-		$AdminStudent='0';
-
-		//return redirect('/')->with($username);
-		return $this->getCourses($username,$firstName,$AdminStudent);
+		return redirect('/');
     }
 
+    
     public function signIn(Request $request){
 
-
     	$con = DB::connection()->getPdo();
-
-    	$firstName='0';
-    	$username='0';
 
 	    if (isset($request->login_username) && isset($request->login_password))
 			{
@@ -92,66 +82,73 @@ class Accounts extends Controller
 					$row = $stmt->fetchAll();
 					$count = $stmt->rowCount();
 
-					if ($count !== 0)
-					{
-						foreach ($row as $key) {
-							# code...
-							$decrypted = Crypt::decryptString($key['Password']);
-
-							if (!($decrypted === $request->login_password))
-								{
-									echo '<script language="javascript">';
-									echo 'alert("Password is incorrect")';
-									echo '</script>';
-									return view('index');
-								}
-								
-						}
-
-						$_SESSION['username']=$request->login_username;
-						$stmt = $con->prepare("SELECT * FROM Student WHERE USERNAME = ?");
-						$val=$request->login_username;
-						$stmt->execute(array($val));
-						$row = $stmt->fetchAll();
-						$count = $stmt->rowCount();
-
-						if ($count !== 0)
+				if ($count !== 0)
+				{	//username found
+					foreach ($row as $key) {
+						# code...
+						if (Hash::check($request->login_password, $key['Password']))
 						{
-							foreach ($row as $key) {
-								$firstName=$key['FirstName'];
-								$_SESSION['FirstName'] = $key['FirstName'];
-							}
-							$AdminStudent='0';
-						
-							//session()
-						}
-						else
-						{
-							$stmt = $con->prepare("SELECT * FROM ADMIN WHERE USERNAME = ?");
+							// The passwords match...
+
+							$stmt = $con->prepare("SELECT * FROM Student WHERE USERNAME = ?");
 							$val=$request->login_username;
 							$stmt->execute(array($val));
 							$row = $stmt->fetchAll();
 							$count = $stmt->rowCount();
+
 							if ($count !== 0)
-							{
+							{ //is student
 								foreach ($row as $key) {
-									$firstName='Admin';
-									$username=$request->signup_username;
+									$firstName=$key['FirstName'];
+									$username=$request->login_username;
+
+									Session::put('username', $username);
+									Session::put('firstName', $firstName);
 								}
-								$AdminStudent='1';
+								
 							}
-									//admin
-						}	
-						return redirect('/');
+							else
+							{ //check if admin
+								$stmt = $con->prepare("SELECT * FROM ADMIN WHERE USERNAME = ?");
+								$val=$request->login_username;
+								$stmt->execute(array($val));
+								$row = $stmt->fetchAll();
+								$count = $stmt->rowCount();
+								if ($count !== 0)
+								{
+									foreach ($row as $key) {
+										$firstName='Admin';
+										$username=$request->login_username;
+										$isTA = $key['STIN'];
+										Session::put('username', $username);
+										Session::put('firstName', $firstName);
+										if($isTA==1)
+										Session::put('isTA',1);
+									}
+									
+									Session::put('isAdmin', '1');
+								}
+							}	
+							return redirect('/');
+							}
+						else
+							{
+							
+								echo '<script language="javascript">';
+								echo 'alert("incorrect password")';
+								echo '</script>';
+				
+							}
+						}
+
 							
 					}
 					else
-						{
-				    		echo '<script language="javascript">';
-							echo 'alert("Username does not exist")';
-							echo '</script>';
-							
-						}
+					{
+						echo '<script language="javascript">';
+						echo 'alert("Username does not exist")';
+						echo '</script>';
+					}
 			}
 					
 
@@ -161,27 +158,12 @@ class Accounts extends Controller
 					echo 'alert("Insert all fields to sign in")';
 					echo '</script>';
 				}
-				
-			
-		//$username=$request->login_username;
-		//$firstName=$request->login_firstName;
 
-		//return redirect('/')->with($username);
-			
-		 return $this->getCourses($username,$firstName,$AdminStudent);
-
-	}
+		}
 
 
 
-	     function getCourses($username='0',$firstName='0',$AdminStudent='0'){
-
-	   	   
-			// $_SESSION["username"] = $username;
-			// $_SESSION["firstName"]=$firstName;
-			// $_SESSION["AdminStudent"]=$AdminStudent;
-	   	   
-
+	    function getCourses(){
 
         $con = DB::connection()->getPdo();
 		$stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP1%' And Term=1");
@@ -283,8 +265,102 @@ $stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP2%' And Term=
 	}
 
 	function signOut(){
-		session_destroy();
-		return $this->getCourses('0','0');
+		Session::flush();
+		return redirect('/');
+	}
+
+
+	function getCoursesManagedByAdmin(){
+
+		$data = session()->all();
+
+		if (!isset($_SESSION)) {
+			session_start();
+			$_SESSION["username"]=$data["username"];
+			$_SESSION["firstName"]=$data["firstName"];
+			$_SESSION["AdminStudent"]=$data["AdminStudent"];
+
+		}
+
+		$con = DB::connection()->getPdo();
+
+		$stmt=$con->prepare("SELECT Code,Name FROM course,admin_manages WHERE Ccode=Code AND Ausername=? AND YEAR= ?");
+		$val=$_SESSION["username"];
+		$val2=date('Y');
+		$stmt->execute(array($val,$val2));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+
+		$coursesManagedByAdmin = array();
+
+		if (isset($row)){
+		    $coursesManagedByAdmin = $row;
+		}
+
+
+		return view('Admin/managedCourses',compact('coursesManagedByAdmin'));
+	}
+
+	public function getProjects(Request $request){
+
+		$data = session()->all();
+
+		if (!isset($_SESSION)) {
+			session_start();
+			$_SESSION["username"]=$data["username"];
+			$_SESSION["firstName"]=$data["firstName"];
+			$_SESSION["AdminStudent"]=$data["AdminStudent"];
+
+		}
+
+		$con = DB::connection()->getPdo();
+
+		$stmt=$con->prepare("SELECT Code,Name FROM course,admin_manages WHERE Ccode=Code AND Ausername=? AND YEAR= ?");
+		$val=$_SESSION["username"];
+		$val2=date('Y');
+		$stmt->execute(array($val,$val2));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+
+		$coursesManagedByAdmin = array();
+
+		if (isset($row)){
+		    $coursesManagedByAdmin = $row;
+		}
+
+		
+		$stmt=$con->prepare("SELECT * FROM project WHERE Ccode=? AND Year=?");
+		$val=$request->course;
+		$val2=date('Y');
+		$stmt->execute(array($val,$val2));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+
+		$coursesList = array();
+
+		if (isset($row)){
+		    $coursesList = $row;
+		}
+
+		return view('Admin/managedCourses',compact('coursesManagedByAdmin','coursesList'));
+	}
+
+	public function setProjectApproved(request $request,$teamID,$projectName){
+
+		$con = DB::connection()->getPdo();
+
+		$stmt=$con->prepare("UPDATE `project` SET `approved`=1 WHERE Name=? AND TID=? ");
+		$val=intval($teamID);
+		$stmt->execute(array($projectName,$val));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+		return $this->getCoursesManagedByAdmin();
+
+		
 	}
 
 }
