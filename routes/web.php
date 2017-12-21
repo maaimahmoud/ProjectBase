@@ -52,3 +52,25 @@ Route::get('/statistics','StatisticsController@showStatistics');
 // Route::get('/adminNote', function(){
 //     return view('admin.notification');
 // });
+
+Route::get('/projectProfile', function () {
+    return view('projectProfile');
+});
+
+Route::get('/projectsub', function () {
+    return view('ProjectSub');
+}); 
+
+Route::get('/WaitAdmin', function () {
+    return view('WaitAdmin');
+}); 
+
+Route::get('projectProfile/{tid}/{pname}','projectController@getproject');
+
+Route::get('{username}/addproject','projectController@addproject');
+
+Route::post('/{username}/createteam','projectController@createteam');
+
+Route::post('/{username}/submit','projectController@submitproj');
+// Route::get('/createteam',function () {
+//     echo "complete nonsense";});
