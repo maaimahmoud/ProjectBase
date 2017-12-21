@@ -24,3 +24,15 @@ Route::get('/searchpage', function () {
 });
 
 Route::post('/search', 'searchController@search');
+
+Route::get('/createProjectRequirment', 'adminController@getCreateRequirementData');
+
+Route::post('/newRequirement', 'adminController@newRequirement');
+
+Route::get('/createCourse', 'adminController@getCreateCourseData');
+
+Route::post('/newCourse', 'adminController@newCourse');
+
+Route::get('/adminNote', function(){
+    return view('admin.notification');
+});
