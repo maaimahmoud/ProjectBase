@@ -62,9 +62,20 @@ class TeamController extends Controller
     */
     public function showProfile($teamID){
         
+        if(ctype_digit($teamID)){
+
         $teamMembers = TeamController::getTeamMembers($teamID);
         $teamName = TeamController::getTeamName($teamID);
         $projectsList = TeamController::getTeamProjects($teamID);
         return view('team.profile',compact('teamMembers','projectsList','teamName'));
+
+        }
+        else{
+        $teamMembers = array();
+        $teamName = NULL;
+        $projectsList = array();
+        return view('team.profile',compact('teamMembers','projectsList','teamName'));
+        }
+        
     }
 }
