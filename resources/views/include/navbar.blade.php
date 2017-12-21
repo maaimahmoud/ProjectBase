@@ -30,8 +30,8 @@
             <div class="collapse navbar-collapse">
                 <form action="/search" method="POST" class="form-inline mr-auto">
                 {{ csrf_field() }}
-                    <input class="form-control mr-sm-2" name="search_value" type="search" placeholder="Search" aria-label="Search">
-                    <select style="width: 70px; margin-right: 10px;" class="custom-select form-control" id="search_combo" name="search_combo">
+                    <input class="form-control mr-sm-2" name="search_value" type="search" placeholder="Search" aria-label="Search" required>
+                    <select style="width: 70px; margin-right: 10px;" class="custom-select form-control" id="search_combo" name="search_combo" required>
                         <option value="">Select your search method</option>
                         <option value="proname">Project Name</option>
                         <option value="tname">Team Name</option>

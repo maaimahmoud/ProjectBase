@@ -10,13 +10,18 @@
 ?>
 
 @section('content')
+    <style>
+        a:active a:hover{
+            text-decoration: none;
+        }
+    </style>
     <section>
         <div class="container-fluid search-result">
             <div class="row">
                 <form action="/search" method="POST" class="form2 form-inline" id="search_form">
                 {{ csrf_field() }}
-                    <input class="form-control mr-sm-2" name="search_value" id="search_value" type="search" minlength="2" maxlength="255" placeholder="Search" aria-label="Search">
-                    <select class="custom-select form-control" id="search_combo" name="search_combo">
+                    <input class="form-control mr-sm-2" name="search_value" id="search_value" type="search" minlength="2" maxlength="255" placeholder="Search" aria-label="Search" required>
+                    <select class="custom-select form-control" id="search_combo" name="search_combo" required>
                         <option value="">Select your search method</option>
                         <option value="proname">Project Name</option>
                         <option value="tname">Team Name</option>
@@ -39,11 +44,13 @@
                     <div class="row ">
                         @for ($j = 3*$i; $j < $max_j; $j++)
                             <div class="col-md-3 col-sm-6 card">
-                                <img width="100px" height="100px" class="project-logo" src="images/t.png">
-                                <h4>{{$searchResult[$j]['Name']}}</h4>
-                                <div class="project-description">
-                                    <p>{{$searchResult[$j]['Document']}}</p>
-                                </div>
+                                <a href="#">
+                                    <img width="100px" height="100px" class="project-logo" src="images/t.png">
+                                    <h4>{{$searchResult[$j]['Name']}}</h4>
+                                    <div class="project-description">
+                                        <p>{{$searchResult[$j]['Document']}}</p>
+                                    </div>
+                                </a>
                             </div>
                         @endfor
                     </div>
