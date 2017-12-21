@@ -103,9 +103,12 @@ class Accounts extends Controller
 									echo '<script language="javascript">';
 									echo 'alert("Password is incorrect")';
 									echo '</script>';
+									return view('index');
 								}
+								
 						}
 
+						$_SESSION['username']=$request->login_username;
 						$stmt = $con->prepare("SELECT * FROM Student WHERE USERNAME = ?");
 						$val=$request->login_username;
 						$stmt->execute(array($val));
@@ -116,9 +119,11 @@ class Accounts extends Controller
 						{
 							foreach ($row as $key) {
 								$firstName=$key['FirstName'];
-								$username=$request->signup_username;
+								$_SESSION['FirstName'] = $key['FirstName'];
 							}
 							$AdminStudent='0';
+						
+							//session()
 						}
 						else
 						{
@@ -135,8 +140,9 @@ class Accounts extends Controller
 								}
 								$AdminStudent='1';
 							}
-
+									//admin
 						}	
+						return redirect('/');
 							
 					}
 					else
@@ -144,6 +150,7 @@ class Accounts extends Controller
 				    		echo '<script language="javascript">';
 							echo 'alert("Username does not exist")';
 							echo '</script>';
+							
 						}
 			}
 					
@@ -155,7 +162,7 @@ class Accounts extends Controller
 					echo '</script>';
 				}
 				
-
+			
 		//$username=$request->login_username;
 		//$firstName=$request->login_firstName;
 
@@ -170,9 +177,9 @@ class Accounts extends Controller
 	     function getCourses($username='0',$firstName='0',$AdminStudent='0'){
 
 	   	   
-	   	   		$_SESSION["username"] = $username;
-	     		$_SESSION["firstName"]=$firstName;
-	     		$_SESSION["AdminStudent"]=$AdminStudent;
+			// $_SESSION["username"] = $username;
+			// $_SESSION["firstName"]=$firstName;
+			// $_SESSION["AdminStudent"]=$AdminStudent;
 	   	   
 
 
@@ -276,7 +283,7 @@ $stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP2%' And Term=
 	}
 
 	function signOut(){
-
+		session_destroy();
 		return $this->getCourses('0','0');
 	}
 
