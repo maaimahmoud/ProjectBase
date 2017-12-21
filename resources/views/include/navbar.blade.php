@@ -52,7 +52,7 @@ if (!isset($_SESSION)) session_start();
                     <li class="nav-item ">
                         <a class="nav-link">HOME</a>
                     </li>
-                    <?php print_r($_SESSION) ?>
+                    
                     @if($_SESSION["username"] != '0')
                    
                         <div class="dropdown" class="nav-link" >
@@ -62,11 +62,11 @@ if (!isset($_SESSION)) session_start();
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#">View Profile</a>
                             @if($_SESSION["AdminStudent"] != '0')
-                                <a class="dropdown-item" href="#">View Managed Courses</a>
+                                <a class="dropdown-item" href="/managedCourses">View Managed Courses</a>
                             @else
                                 <a class="dropdown-item" href="#">Submit Project</a>
                             @endif
-                            <a class="dropdown-item" href="#" action="/signOut" method="get">Log Out</a>
+                            <a class="dropdown-item" href="/signOut">Log Out</a>
                           </div>
                     </div>
                       @else

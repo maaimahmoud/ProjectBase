@@ -116,7 +116,7 @@ class Accounts extends Controller
 						{
 							foreach ($row as $key) {
 								$firstName=$key['FirstName'];
-								$username=$request->signup_username;
+								$username=$request->login_username;
 							}
 							$AdminStudent='0';
 						}
@@ -131,7 +131,7 @@ class Accounts extends Controller
 							{
 								foreach ($row as $key) {
 									$firstName='Admin';
-									$username=$request->signup_username;
+									$username=$request->login_username;
 								}
 								$AdminStudent='1';
 							}
@@ -155,7 +155,12 @@ class Accounts extends Controller
 					echo '</script>';
 				}
 				
+				session(['username' => $username]);
 
+				session(['firstName' => $firstName]);
+
+				session(['AdminStudent' => $AdminStudent]);
+				
 		//$username=$request->login_username;
 		//$firstName=$request->login_firstName;
 
@@ -278,6 +283,100 @@ $stmt = $con->prepare("SELECT Name FROM COURSE WHERE Code Like 'CMP2%' And Term=
 	function signOut(){
 
 		return $this->getCourses('0','0');
+	}
+
+
+	function getCoursesManagedByAdmin(){
+
+		$data = session()->all();
+
+		if (!isset($_SESSION)) {
+			session_start();
+			$_SESSION["username"]=$data["username"];
+			$_SESSION["firstName"]=$data["firstName"];
+			$_SESSION["AdminStudent"]=$data["AdminStudent"];
+
+		}
+
+		$con = DB::connection()->getPdo();
+
+		$stmt=$con->prepare("SELECT Code,Name FROM course,admin_manages WHERE Ccode=Code AND Ausername=? AND YEAR= ?");
+		$val=$_SESSION["username"];
+		$val2=date('Y');
+		$stmt->execute(array($val,$val2));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+
+		$coursesManagedByAdmin = array();
+
+		if (isset($row)){
+		    $coursesManagedByAdmin = $row;
+		}
+
+
+		return view('Admin/managedCourses',compact('coursesManagedByAdmin'));
+	}
+
+	public function getProjects(Request $request){
+
+		$data = session()->all();
+
+		if (!isset($_SESSION)) {
+			session_start();
+			$_SESSION["username"]=$data["username"];
+			$_SESSION["firstName"]=$data["firstName"];
+			$_SESSION["AdminStudent"]=$data["AdminStudent"];
+
+		}
+
+		$con = DB::connection()->getPdo();
+
+		$stmt=$con->prepare("SELECT Code,Name FROM course,admin_manages WHERE Ccode=Code AND Ausername=? AND YEAR= ?");
+		$val=$_SESSION["username"];
+		$val2=date('Y');
+		$stmt->execute(array($val,$val2));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+
+		$coursesManagedByAdmin = array();
+
+		if (isset($row)){
+		    $coursesManagedByAdmin = $row;
+		}
+
+		
+		$stmt=$con->prepare("SELECT * FROM project WHERE Ccode=? AND Year=?");
+		$val=$request->course;
+		$val2=date('Y');
+		$stmt->execute(array($val,$val2));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+
+		$coursesList = array();
+
+		if (isset($row)){
+		    $coursesList = $row;
+		}
+
+		return view('Admin/managedCourses',compact('coursesManagedByAdmin','coursesList'));
+	}
+
+	public function setProjectApproved(request $request,$teamID,$projectName){
+
+		$con = DB::connection()->getPdo();
+
+		$stmt=$con->prepare("UPDATE `project` SET `approved`=1 WHERE Name=? AND TID=? ");
+		$val=intval($teamID);
+		$stmt->execute(array($projectName,$val));
+		$row = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+
+		return $this->getCoursesManagedByAdmin();
+
+		
 	}
 
 }

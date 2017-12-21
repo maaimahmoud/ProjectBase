@@ -19,6 +19,8 @@ Route::POST('/signIn','Accounts@signIn');
 
 Route::get('/signOut','Accounts@signOut');
 
-Route::get('/managedCourses',function(){
-	return view('Admin/managedCourses');
-});
+Route::get('/managedCourses','Accounts@getCoursesManagedByAdmin');
+
+Route::post('/listOfProjects', 'Accounts@getProjects');
+
+Route::post('Admin/projectApproved/{teamID}/{projectName}','Accounts@setProjectApproved');
