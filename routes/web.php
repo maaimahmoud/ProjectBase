@@ -20,6 +20,11 @@ Route::get('/search', function () {
 
 Route::get('/user/{username}','UserController@showProfile');
 
+Route::get('/editprofile','UserController@editProfile');
+
+Route::post('/editprofile','UserController@setUserPassword');
+
 Route::get('/team/{teamID}','TeamController@showProfile');
 
 Route::get('/statistics','StatisticsController@showStatistics');
+
