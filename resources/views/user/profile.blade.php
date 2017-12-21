@@ -8,6 +8,11 @@
 
     @if(count($userInfo)>0)
         @foreach($userInfo as $info)
+        @if(Session::has('username'))
+        @if($info->username === Session::get('username'))
+        <a href="/editprofile">edit profile</a>
+        @endif
+        @endif
         <h1>{{$info->username}}'s Profile<br></h1>
         <h2>First Name: {{$info->FirstName}} </h2>
         <h2>Middle Name: {{$info->MiddleName}} </h2>

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use Session;
 use App\Http\Controllers\Controller;
 use DB;
 use Hash;
+
 class UserController extends Controller
 {
     
@@ -75,7 +78,7 @@ class UserController extends Controller
     public function setUserPassword(Request $request){
 
         //if he logged in
-        if(isset($_SESSION['username'])){
+        if(Session::has('username')){
 
             //refresh if he pressed submit without 
            $this->validate($request,[
@@ -96,7 +99,7 @@ class UserController extends Controller
            {
 
             $hashedPassword = Hash::make($request->password);
-            UserController::setPassword($_SESSION['username'],$hashedPassword);
+            UserController::setPassword(Session::get('username'),$hashedPassword);
             return view('user.editprofile')->with('msg',"Password changed succefully");
 
            }
@@ -110,7 +113,7 @@ class UserController extends Controller
 
     public function editProfile(){
         
-        if(isset($_SESSION['username'])){
+        if(Session::has('username')){
 
             return view('user.editprofile');
 
