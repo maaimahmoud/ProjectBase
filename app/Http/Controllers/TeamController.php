@@ -72,7 +72,7 @@ class TeamController extends Controller
         }
         else{
         $teamMembers = array();
-        $teamName = NULL;
+        $teamName = "NULL";
         $projectsList = array();
         return view('team.profile',compact('teamMembers','projectsList','teamName'));
         }
