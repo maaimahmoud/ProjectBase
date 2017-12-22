@@ -32,11 +32,11 @@ class adminController extends Controller
         if (!Session::has('isTA')){
             return redirect('/');
         }
-        $username = session('usename');
+        $username = Session::get('usename');
         $con = DB::connection()->getPdo();
 
         $stmt = $con->prepare("SELECT distinct Ccode FROM ADMIN,ADMIN_MANAGES WHERE username = ?");
-        $stmt->execute(array($admin_username));
+        $stmt->execute(array($username));
         $row = $stmt->fetchAll();
         $count = $stmt->rowCount();
 
